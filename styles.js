@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     inputContainer:{
       flexDirection:'row',
       alignItems:'center',
-      justifyContent:'space-between',
+      justifyContent:'space-around',
     },
     button: {
         width:'20%',

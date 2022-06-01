@@ -1,21 +1,29 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {Text, View, Button, TextInput, ScrollView, KeyboardAvoidingView} from 'react-native';
+import {Text, View, Button, TextInput, ScrollView, KeyboardAvoidingView, Alert} from 'react-native';
 import styles from './styles';
 import GoalItem from './GoalItem';
 
 export default function App() {
 
-  const [enteredGoal, setEnteredGoal] = useState('');
+  const [enteredGoal, setEnteredGoal] = useState('')
+  const [goals, setGoals] = useState([]);
+
 
   const changeGoal = e =>{
     setEnteredGoal(e);
   }
 
   const addGoal = () => {
-    goals.push(enteredGoal);
+    setGoals([...goals,{id: Math.random().toString(), goal: enteredGoal}])
     setEnteredGoal('');
   }
+
+  const deleteGoal=id=>{
+    setGoals(goals.filter(e=>e.id!==id));
+  }
+
+
   return (
     <View style={styles.main}>
       <View style={styles.title}>
@@ -29,7 +37,7 @@ export default function App() {
         <View stlye={{flex:1}}>
           <KeyboardAvoidingView>
             <ScrollView stlye={{flex:1}}>
-              {goals.map(x => <GoalItem goal={x} key={x}/>)}
+              {goals.map(x => <GoalItem goal={x.goal} id={x.id} key={x.id} deleteItem={deleteGoal} />)}
             </ScrollView>
           </KeyboardAvoidingView>
         </View>
@@ -37,6 +45,4 @@ export default function App() {
     </View>
   );
 }
-
-let goals = [];
 
