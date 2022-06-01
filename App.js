@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
+import {Text, View, Button, TextInput, ScrollView, KeyboardAvoidingView} from 'react-native';
 import styles from './styles';
+import GoalItem from './GoalItem';
+
 export default function App() {
 
   const [enteredGoal, setEnteredGoal] = useState('');
@@ -13,8 +15,6 @@ export default function App() {
   const addGoal = () => {
     goals.push(enteredGoal);
     setEnteredGoal('');
-    console.log("DONE");
-    goals.map(x=>console.log(x))
   }
   return (
     <View style={styles.main}>
@@ -26,15 +26,15 @@ export default function App() {
           <TextInput style={styles.input} value={enteredGoal} placeholder='Add Goal!' onChangeText={changeGoal}/>
           <Button style={styles.button} color='#a058ed' title='Add' onPress={addGoal}/>
         </View>
-        <View >
-          {goals.map(x => <View style={styles.goalItem}>
-            <Text key={x}>{x}</Text>
-            </View>)}
+        <View stlye={{flex:1}}>
+          <KeyboardAvoidingView>
+            <ScrollView stlye={{flex:1}}>
+              {goals.map(x => <GoalItem goal={x} key={x}/>)}
+            </ScrollView>
+          </KeyboardAvoidingView>
         </View>
       </View>
-      
     </View>
-
   );
 }
 
